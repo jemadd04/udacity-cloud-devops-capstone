@@ -2,16 +2,20 @@ pipeline{
   agent any
   stages{
     stage('Linting1'){
-      steps{
+        steps{
             sh 'tidy -q -e ./blue/*.html'
             sh 'tidy -q -e ./green/*.html'
       }
     }
-    // stage('Build image'){
-    //   steps{
-    //         //
-    //   }
-    // }
+    stage('Build image'){
+        steps {
+            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
+                sh '''
+                    docker build -t jamesmaddox/udacapstone .
+                '''
+        }
+    }
+    }
     // stage('Push image'){
     //   steps{
     //         //
