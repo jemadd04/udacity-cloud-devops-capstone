@@ -1,7 +1,7 @@
 pipeline{
   agent any
   stages{
-    stage('Linting'){
+    stage('Linting1'){
       steps{
             sh 'tidy -q -e ./blue/*.html'
             sh 'tidy -q -e ./green/*.html'
