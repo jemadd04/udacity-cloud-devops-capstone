@@ -9,7 +9,8 @@ pipeline{
     }
     stage('Build images'){
         steps {
-          docker build -t blue/Dockerfile .
+          docker build -f blue/Dockerfile .
+          docker build -f green/Dockerfile .
       }
     }
     // stage('Push image'){
