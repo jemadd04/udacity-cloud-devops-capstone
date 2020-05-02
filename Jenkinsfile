@@ -9,9 +9,10 @@ pipeline{
     }
     stage('Build images'){
         steps {
-          withCredentials([[credentialsId: 'dockerhub']])
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
             sh "docker build -f blue/Dockerfile -t jamesmaddox/bluedeploy ."
             sh "docker build -f green/Dockerfile -t jamesmaddox/greendeploy ."
+          }
       }
     }
     // stage('Push image'){
