@@ -34,10 +34,15 @@ pipeline{
 				}
 			}
     }
-    // stage('Deploy container'){
-    //   steps{
-    //         //
-    //   }
-    // }
+    stage('Deploy container'){
+      steps{
+        withAWS(region:'us-east-2', credentials:'aws-credentials') {
+					sh '''
+            kubectl apply -f ./blue/blue-controller.json
+            kubectl apply -f ./green/green-controller.json
+					'''
+				}
+      }
+    }
   }    
 }
