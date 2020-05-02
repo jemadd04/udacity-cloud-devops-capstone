@@ -28,6 +28,7 @@ pipeline{
       steps {
 				withAWS(region:'us-east-2', credentials:'aws-credentials') {
 					sh '''
+            aws eks --region us-east-2 update-kubeconfig --name jmcapstone
 						kubectl config use-context arn:aws:eks:us-east-2:218943385380:cluster/jmcapstone
 					'''
 				}
