@@ -24,11 +24,15 @@ pipeline{
         }
       }
     }
-    // stage('Set current kubectl context'){
-    //   steps{
-    //         //
-    //   }
-    // }
+    stage('Set current kubectl context'){
+      steps {
+				withAWS(region:'us-east-2', credentials:'aws-credentials') {
+					sh '''
+						kubectl config use-context arn:aws:eks:us-east-2:218943385380:cluster/jmcapstone
+					'''
+				}
+			}
+    }
     // stage('Deploy container'){
     //   steps{
     //         //
