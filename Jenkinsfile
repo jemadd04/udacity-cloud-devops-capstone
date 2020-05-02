@@ -9,9 +9,7 @@ pipeline{
     }
     stage('Build images'){
         steps {
-          script {
-            dockerImage = docker.build("jamesmaddox/bluedeploy")
-          }
+          docker build -t blue/Dockerfile
       }
     }
     // stage('Push image'){
