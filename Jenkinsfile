@@ -9,8 +9,6 @@ pipeline{
     }
     stage('Build images'){
         steps {
-          docker build -f blue/Dockerfile .
-          docker build -f green/Dockerfile .
           sh "docker build -f blue/Dockerfile -t jamesmaddox/bluedeploy"
           sh "docker build -f green/Dockerfile -t jamesmaddox/greendeploy"
       }
