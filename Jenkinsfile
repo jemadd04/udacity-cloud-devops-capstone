@@ -7,7 +7,7 @@ pipeline{
             sh 'tidy -q -e ./green/*.html'
       }
     }
-    stage('Build images'){
+    stage('Build image'){
         steps {
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
             sh "docker build -f blue/Dockerfile -t jamesmaddox/bluedeploy ."
