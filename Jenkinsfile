@@ -44,25 +44,16 @@ pipeline{
 				}
       }
     }
-    stage('Create cluster service, redirect to blue'){
-      steps{
-        withAWS(region:'us-east-2', credentials:'aws-credentials') {
-					sh '''
-            kubectl apply -f ./blue/blue-service.json
-					'''
-				}
-      }
-    }
     stage('Confirm traffic redirect'){
       steps{
-        input "Please provide confirmation to redirect traffic to green"
+        input "Please provide confirmation to redirect traffic to other deployment"
       }
     }
-    stage('Create cluster service, redirect to green'){
+    stage('Create cluster service and redirect'){
       steps{
         withAWS(region:'us-east-2', credentials:'aws-credentials') {
 					sh '''
-            kubectl apply -f ./green/green-service.json
+            kubectl apply -f ./blue-green-service.json
 					'''
 				}
       }
