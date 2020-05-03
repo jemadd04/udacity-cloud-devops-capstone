@@ -1,13 +1,13 @@
 pipeline{
   agent any
   stages{
-    stage('Linting1'){
+    stage('Lint blue HTML & green HTML'){
         steps{
             sh 'tidy -q -e ./blue/*.html'
             sh 'tidy -q -e ./green/*.html'
       }
     }
-    stage('Build image'){
+    stage('Build blue & green images'){
         steps {
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
             sh "docker build -f blue/Dockerfile -t jamesmaddox/bluedeploy ."
@@ -15,7 +15,7 @@ pipeline{
           }
       }
     }
-    stage('Push image'){
+    stage('Push blue & green images'){
       steps{
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]){
           sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
@@ -34,7 +34,7 @@ pipeline{
 				}
 			}
     }
-    stage('Deploy container'){
+    stage('Deploy blue & green container'){
       steps{
         withAWS(region:'us-east-2', credentials:'aws-credentials') {
 					sh '''
